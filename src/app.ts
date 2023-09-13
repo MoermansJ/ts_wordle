@@ -1,27 +1,42 @@
 // import UserInputWord from "./userInputWord";
 
 window.onload = (): void => {
+  //
   //variables
   const computerWord: string = generateRandomWord();
   let userGuessCounter: number = 0;
 
+  //
   //start up
   main();
 
+  //
   //functions
   function main(): void {
+    //game starts
     const obscureComputerWord: string = obscureWord(computerWord);
     printObscureWord(obscureComputerWord);
   }
 
+  //
+  //event handlers
   function handleUserSubmit(): void {
     //triggered by "CHECK" button click
     ++userGuessCounter;
-    const userInput: string = (document.getElementById("user-input") as HTMLInputElement).value;
+
+    //saving user input
+    const userInputHTML: HTMLInputElement = document.getElementById("user-input") as HTMLInputElement;
+    const userInput: string = userInputHTML.value;
+    userInputHTML.value = ""; //clearing for UX
+
+    //handling user input
     const userInputWord: UserInputWord = new UserInputWord(userGuessCounter, userInput, computerWord);
+
+    //updating view
     printUserInput(userInputWord.HTMLElement);
   }
 
+  //helper methods
   function printUserInput(HTML: HTMLElement): void {
     //appending HTML
     const userWordHTML = document.getElementById("user-word") as HTMLDivElement;
@@ -34,11 +49,11 @@ window.onload = (): void => {
   }
 
   function generateRandomWord(): string {
-    return "alphabet"; //TO DO: randomise
+    return "ALPHABET"; //TO DO: randomise
   }
 
   function obscureWord(word: string): string {
-    //obscuring computerWord
+    //obscuring word
     let obscureWord: string = "";
     for (let i = 0; i < word.length; i++) {
       obscureWord += "*";
@@ -47,10 +62,13 @@ window.onload = (): void => {
     return obscureWord;
   }
 
+  //
   //event listeners
   document.getElementById("user-submit")?.addEventListener("click", handleUserSubmit);
 };
-
+//
+//
+//
 //classes - TO DO: export/import + webpack
 class UserInputWord {
   //properties
@@ -62,10 +80,8 @@ class UserInputWord {
   //constructor
   public constructor(guessCount: number, userInput: string, computerWord: string) {
     this._id = guessCount;
-    // this._charArray = UserInputWord.convertWordToCharArray(userInput);
-    this._userInput = userInput;
     this.computerWord = computerWord;
-    // this._HTMLElement = this.createHTML(this._charArray);
+    this._userInput = userInput.substring(0, computerWord.length).toLocaleUpperCase(); //this does NOT cause bugs when computerWord.length > userinput.length
     this._HTMLElement = this.createHTML();
   }
 
@@ -83,17 +99,19 @@ class UserInputWord {
   }
 
   //custom methods
-  private static convertWordToCharArray(word: string): string[] {
-    let charArray: string[] = [];
+  private static convertWordToCharArray(word: string, computerWord: string): string[] {
+    let charArray: string[] = new Array(computerWord.length);
+    charArray.fill("_");
+
     for (let i = 0; i < word.length; i++) {
-      charArray.push(word.charAt(i));
+      charArray[i] = word.charAt(i);
     }
     return charArray;
   }
 
   private createHTML(): HTMLElement {
-    const userInputCharArray: string[] = UserInputWord.convertWordToCharArray(this.userInput);
-    const computerWordCharArray: string[] = UserInputWord.convertWordToCharArray(this.computerWord);
+    const userInputCharArray: string[] = UserInputWord.convertWordToCharArray(this.userInput, this.computerWord);
+    const computerWordCharArray: string[] = UserInputWord.convertWordToCharArray(this.computerWord, this.computerWord);
 
     //creating row element
     const guessRowHTML: HTMLDivElement = document.createElement("div") as HTMLDivElement;
@@ -109,7 +127,7 @@ class UserInputWord {
       //style - colouring
       //if letter is correct and in the right place - GREEN
       if (computerWordCharArray[i] === userInputCharArray[i]) {
-        letterDivHTML.style.background = "green";
+        letterDivHTML.style.background = "#638B54";
       }
 
       //if letter is correct but in wrong place
