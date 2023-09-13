@@ -1,0 +1,26 @@
+body {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  color: #fffdff;
+  background: #3a3a3c;
+}
+
+body > div {
+  width: 400px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 12px;
+  border-radius: 8px;
+  background: #008bff;
+  color: white;
+  margin-bottom: 20px;
+}
+
+#user-word > div > span {
+  border: 2px solid black;
+  padding: 8px 12px;
+  line-height: 3rem;
+  background: #3a3a3c;
+}
