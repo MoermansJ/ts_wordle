@@ -8,10 +8,8 @@ export default class UserInputWord {
   //constructor
   public constructor(guessCount: number, userInput: string, computerWord: string) {
     this._id = guessCount;
-    // this._charArray = UserInputWord.convertWordToCharArray(userInput);
-    this._userInput = userInput;
     this.computerWord = computerWord;
-    // this._HTMLElement = this.createHTML(this._charArray);
+    this._userInput = userInput.substring(0, computerWord.length).toLocaleUpperCase(); //this does NOT cause bugs when computerWord.length > userinput.length
     this._HTMLElement = this.createHTML();
   }
 
@@ -25,46 +23,49 @@ export default class UserInputWord {
   }
 
   public get HTMLElement(): HTMLElement {
-    return this.HTMLElement;
+    return this._HTMLElement;
   }
 
   //custom methods
-  private static convertWordToCharArray(word: string): string[] {
-    let charArray: string[] = [];
+  private static convertWordToCharArray(word: string, computerWord: string): string[] {
+    let charArray: string[] = new Array(computerWord.length);
+    charArray.fill("_");
+
     for (let i = 0; i < word.length; i++) {
-      charArray.push(word.charAt(i));
+      charArray[i] = word.charAt(i);
     }
     return charArray;
   }
 
   private createHTML(): HTMLElement {
-    const userInputCharArray: string[] = UserInputWord.convertWordToCharArray(this.userInput);
-    const computerWordCharArray: string[] = UserInputWord.convertWordToCharArray(this.computerWord);
+    const userInputCharArray: string[] = UserInputWord.convertWordToCharArray(this.userInput, this.computerWord);
+    const computerWordCharArray: string[] = UserInputWord.convertWordToCharArray(this.computerWord, this.computerWord);
 
     //creating row element
     const guessRowHTML: HTMLDivElement = document.createElement("div") as HTMLDivElement;
-    guessRowHTML.innerHTML = `<div id="user-guess-row-${this._id}">`;
+    guessRowHTML.id = `user-guess-row-${this._id}`;
 
-    //adding individual letters to row
+    //individual letters
     for (let i = 0; i < userInputCharArray.length; i++) {
-      //creating letter element
+      //creating element
       let letterDivHTML: HTMLDivElement = document.createElement("span") as HTMLDivElement;
-      letterDivHTML.innerHTML = `<span id="user-word-letter-${this._id}">${userInputCharArray[i]}</span>`;
+      letterDivHTML.id = `user-word-letter-${i}`;
+      letterDivHTML.innerText = `${userInputCharArray[i]}`;
 
-      //colouring letter
-      //if letter is correct and in the right place - GREEN
-      if (computerWordCharArray[i] === userInputCharArray[i]) {
-        letterDivHTML.style.background = "green";
+      //style - colouring
+      //if letter is correct but in wrong place - ORANGE
+      if (computerWordCharArray.includes(userInputCharArray[i])) {
+        letterDivHTML.style.background = "#D1B036";
       }
 
-      //if letter is correct but in wrong place
-      //add logic - ORANGE
+      if (computerWordCharArray[i] === userInputCharArray[i]) {
+        //if letter is correct and in the right place - GREEN
+        letterDivHTML.style.background = "#6AAA64";
+      }
 
+      //appending
       guessRowHTML.append(letterDivHTML);
     }
-
-    //closing element
-    guessRowHTML.innerHTML += `</div>`;
 
     return guessRowHTML;
   }

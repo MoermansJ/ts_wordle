@@ -7,7 +7,7 @@
 		<link href="./index.css" rel="stylesheet">
 		</link>
 
-		<script src="./dist/app.js" defer></script>
+		<script type="module" src="./dist/app.js" defer></script>
 		<title>Homepage</title>
 	</head>
 
@@ -21,7 +21,11 @@
 			<b>USER</b>
 			<br />
 			<div>
-				<input id="user-input">
+				<input type="text" maxlength="1" class="letter-input" id="input1">
+				<input type="text" maxlength="1" class="letter-input" id="input2">
+				<input type="text" maxlength="1" class="letter-input" id="input3">
+				<input type="text" maxlength="1" class="letter-input" id="input4">
+				<input type="text" maxlength="1" class="letter-input" id="input5">
 				<button id="user-submit">CHECK</button>
 			</div>
 
