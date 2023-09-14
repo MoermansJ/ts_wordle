@@ -38,6 +38,10 @@ body {
 #input-container > button {
 }
 
+#input-container > input {
+  caret-color: transparent;
+}
+
 #input-container > span {
   animation: fadeInUp 0.5s ease-out; /* Adjust the duration and timing function as needed */
 }

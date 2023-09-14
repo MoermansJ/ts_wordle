@@ -51,12 +51,9 @@ export default class UserInputWord {
       letterDivHTML.id = `user-word-${this._id}-letter-${i}`;
       letterDivHTML.innerText = `${userInputCharArray[i]}`;
 
-      //style
       //style - layout
       letterDivHTML.style.gridRow = "" + (this.id + 2);
-      console.log("id" + this.id);
       letterDivHTML.style.gridColumn = "" + (i + 1);
-      console.log("i" + (i + 1));
 
       //style - colouring
       //if letter is correct but in wrong place - ORANGE

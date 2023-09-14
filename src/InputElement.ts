@@ -32,6 +32,14 @@ export default class InputElement {
       HTML.push(inputHTML);
     }
 
+    let buttonHTML: HTMLButtonElement = document.createElement("button") as HTMLButtonElement;
+    buttonHTML.innerText = ">";
+    buttonHTML.id = "user-submit";
+    buttonHTML.style.cursor = "pointer";
+    buttonHTML.style.gridRow = "0";
+    buttonHTML.style.gridColumn = "" + (computerWord.length + 1);
+    HTML.push(buttonHTML);
+
     return HTML;
   }
 

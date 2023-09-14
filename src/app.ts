@@ -6,6 +6,7 @@ window.onload = (): void => {
   // const words: string[] = ["alphabet", "test"];
   const computerWord: string = generateRandomWord();
   let userGuessCounter: number = 0;
+  let readyToPlay: boolean = false;
 
   //start up
   main();
@@ -13,32 +14,28 @@ window.onload = (): void => {
   //functions
   function main(): void {
     //game starts
-    const obscureComputerWord: string = obscureWord(computerWord);
-    printObscureWord(obscureComputerWord);
+    printTitle(computerWord);
     const inputElements: HTMLElement[] = new InputElement(computerWord).HTMLElement;
     printInputElements(inputElements);
+    readyToPlay = true;
   }
 
   //event handlers
   function handleUserSubmit(): void {
     //triggered by "CHECK" button click
-    ++userGuessCounter;
+    if (!readyToPlay) {
+      return;
+    }
 
-    //saving user input
+    //user input
+    ++userGuessCounter;
     const allInputElements: HTMLInputElement[] = Array.from(document.getElementsByClassName("letter-input")) as HTMLInputElement[]; //casting from HTMLCollectionOf<Element> TO array TO HTMLElement[];
     let userInput: string = "";
     for (let i = 0; i < allInputElements.length; i++) {
       userInput += allInputElements[i].value;
       allInputElements[i].value = "";
     }
-
-    //focusing back on first input box
-    document.getElementById("input-1")?.focus();
-
-    //handling user input
     const userInputWord: UserInputWord = new UserInputWord(userGuessCounter, userInput, computerWord);
-
-    //updating view
     printUserInput(userInputWord.HTMLElement);
 
     //shifting focus
@@ -47,30 +44,18 @@ window.onload = (): void => {
   }
 
   //helper methods
+  function generateRandomWord(): string {
+    // return words[Math.round(Math.random())].toUpperCase(); //TO DO: randomise
+    return "joeye".toUpperCase();
+  }
+
   function printUserInput(HTML: HTMLElement[]): void {
-    //appending HTML
     const userWordHTML = document.getElementById("input-container") as HTMLDivElement;
     HTML.forEach((element) => userWordHTML.append(element));
   }
 
-  function printObscureWord(word: string): void {
-    //updating HTML
-    (document.getElementById("obscure-word") as HTMLParagraphElement).innerText = word;
-  }
-
-  function generateRandomWord(): string {
-    // return words[Math.round(Math.random())]; //TO DO: randomise
-    return "JOEY";
-  }
-
-  function obscureWord(word: string): string {
-    //obscuring word
-    let obscureWord: string = "";
-    for (let i = 0; i < word.length; i++) {
-      obscureWord += "*";
-    }
-
-    return obscureWord;
+  function printTitle(word: string): void {
+    (document.getElementById("computer-title") as HTMLElement).innerText = `Guess the ${word.length}-letter word`;
   }
 
   function printInputElements(inputElements: HTMLElement[]): void {
