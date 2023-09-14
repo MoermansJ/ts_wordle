@@ -20,16 +20,12 @@
 		<div id="user">
 			<b>USER</b>
 			<br />
-			<div>
-				<input type="text" maxlength="1" class="letter-input" id="input1">
-				<input type="text" maxlength="1" class="letter-input" id="input2">
-				<input type="text" maxlength="1" class="letter-input" id="input3">
-				<input type="text" maxlength="1" class="letter-input" id="input4">
-				<input type="text" maxlength="1" class="letter-input" id="input5">
-				<button id="user-submit">CHECK</button>
-			</div>
+			<form onsubmit="event.preventDefault();">
+				<div id="input-container">
+					<button id="user-submit">CHECK</button>
+				</div>
+			</form>
 
-			<div id="user-word"></div>
 		</div>
 	</body>
 

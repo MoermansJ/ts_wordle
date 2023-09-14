@@ -3,14 +3,14 @@ export default class UserInputWord {
   private _id: number = 0;
   private _userInput: string = "";
   private computerWord: string = "";
-  private _HTMLElement: HTMLElement;
+  private _HTMLElement: HTMLElement[];
 
   //constructor
   public constructor(guessCount: number, userInput: string, computerWord: string) {
     this._id = guessCount;
     this.computerWord = computerWord;
     this._userInput = userInput.substring(0, computerWord.length).toLocaleUpperCase(); //this does NOT cause bugs when computerWord.length > userinput.length
-    this._HTMLElement = this.createHTML();
+    this._HTMLElement = this.render();
   }
 
   //getters
@@ -22,7 +22,7 @@ export default class UserInputWord {
     return this._userInput;
   }
 
-  public get HTMLElement(): HTMLElement {
+  public get HTMLElement(): HTMLElement[] {
     return this._HTMLElement;
   }
 
@@ -37,20 +37,26 @@ export default class UserInputWord {
     return charArray;
   }
 
-  private createHTML(): HTMLElement {
+  private render(): HTMLElement[] {
     const userInputCharArray: string[] = UserInputWord.convertWordToCharArray(this.userInput, this.computerWord);
     const computerWordCharArray: string[] = UserInputWord.convertWordToCharArray(this.computerWord, this.computerWord);
 
     //creating row element
-    const guessRowHTML: HTMLDivElement = document.createElement("div") as HTMLDivElement;
-    guessRowHTML.id = `user-guess-row-${this._id}`;
+    let guessRowHTML: HTMLDivElement[] = [];
 
     //individual letters
     for (let i = 0; i < userInputCharArray.length; i++) {
       //creating element
       let letterDivHTML: HTMLDivElement = document.createElement("span") as HTMLDivElement;
-      letterDivHTML.id = `user-word-letter-${i}`;
+      letterDivHTML.id = `user-word-${this._id}-letter-${i}`;
       letterDivHTML.innerText = `${userInputCharArray[i]}`;
+
+      //style
+      //style - layout
+      letterDivHTML.style.gridRow = "" + (this.id + 2);
+      console.log("id" + this.id);
+      letterDivHTML.style.gridColumn = "" + (i + 1);
+      console.log("i" + (i + 1));
 
       //style - colouring
       //if letter is correct but in wrong place - ORANGE
@@ -64,7 +70,7 @@ export default class UserInputWord {
       }
 
       //appending
-      guessRowHTML.append(letterDivHTML);
+      guessRowHTML.push(letterDivHTML);
     }
 
     return guessRowHTML;

@@ -1,25 +1,54 @@
+@import url("https://fonts.googleapis.com/css2?family=Recursive&family=Roboto:wght@100;300&display=swap");
+
+:root {
+  --white: #fffdff;
+  --black: #3a3a3c;
+  --boxSide: 20px;
+}
+
 body {
   display: flex;
   align-items: center;
   flex-direction: column;
-  color: #fffdff;
-  background: #3a3a3c;
+  color: var(--white);
+  background: var(--black);
+  font-family: "Roboto", sans-serif;
 }
 
-body > div {
-  width: 400px;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  padding: 12px;
-  border-radius: 8px;
-  background: #008bff;
-  margin-bottom: 20px;
+#input-container {
+  display: grid;
+  grid-template-columns: auto minmax(auto, 1fr) auto;
+  justify-content: center; /* Center the middle column */
+  gap: 10px; /* Adjust the gap between columns */
 }
 
-#user-word > div > span {
+#input-container > span,
+#input-container > input {
+  color: var(--white);
+  background: #131314;
   border: 2px solid black;
-  padding: 8px 12px;
-  line-height: 3rem;
-  background: #3a3a3c;
+  width: 40px;
+  height: 40px;
+  padding: 10px;
+  text-align: center;
+  line-height: 2.5rem;
+  font-weight: 900;
+}
+
+#input-container > button {
+}
+
+#input-container > span {
+  animation: fadeInUp 0.5s ease-out; /* Adjust the duration and timing function as needed */
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0; /* Start with 0% opacity */
+    transform: translateY(20px); /* Start 20px below its final position */
+  }
+  100% {
+    opacity: 1; /* End with 100% opacity */
+    transform: translateY(0); /* End at its final position */
+  }
 }

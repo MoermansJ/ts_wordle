@@ -1,8 +1,9 @@
+import InputElement from "./InputElement.js";
 import UserInputWord from "./userInputWord.js";
 
 window.onload = (): void => {
   //variables
-  const words: string[] = ["alphabet", "test"];
+  // const words: string[] = ["alphabet", "test"];
   const computerWord: string = generateRandomWord();
   let userGuessCounter: number = 0;
 
@@ -14,6 +15,8 @@ window.onload = (): void => {
     //game starts
     const obscureComputerWord: string = obscureWord(computerWord);
     printObscureWord(obscureComputerWord);
+    const inputElements: HTMLElement[] = new InputElement(computerWord).HTMLElement;
+    printInputElements(inputElements);
   }
 
   //event handlers
@@ -22,22 +25,32 @@ window.onload = (): void => {
     ++userGuessCounter;
 
     //saving user input
-    const userInputHTML: HTMLInputElement = document.getElementById("user-input") as HTMLInputElement;
-    const userInput: string = userInputHTML.value;
-    userInputHTML.value = ""; //clearing for UX
+    const allInputElements: HTMLInputElement[] = Array.from(document.getElementsByClassName("letter-input")) as HTMLInputElement[]; //casting from HTMLCollectionOf<Element> TO array TO HTMLElement[];
+    let userInput: string = "";
+    for (let i = 0; i < allInputElements.length; i++) {
+      userInput += allInputElements[i].value;
+      allInputElements[i].value = "";
+    }
+
+    //focusing back on first input box
+    document.getElementById("input-1")?.focus();
 
     //handling user input
     const userInputWord: UserInputWord = new UserInputWord(userGuessCounter, userInput, computerWord);
 
     //updating view
     printUserInput(userInputWord.HTMLElement);
+
+    //shifting focus
+    const firstInput: HTMLInputElement = document.getElementById("input1") as HTMLInputElement;
+    firstInput.focus();
   }
 
   //helper methods
-  function printUserInput(HTML: HTMLElement): void {
+  function printUserInput(HTML: HTMLElement[]): void {
     //appending HTML
-    const userWordHTML = document.getElementById("user-word") as HTMLDivElement;
-    userWordHTML.append(HTML);
+    const userWordHTML = document.getElementById("input-container") as HTMLDivElement;
+    HTML.forEach((element) => userWordHTML.append(element));
   }
 
   function printObscureWord(word: string): void {
@@ -46,7 +59,8 @@ window.onload = (): void => {
   }
 
   function generateRandomWord(): string {
-    return words[Math.round(Math.random())]; //TO DO: randomise
+    // return words[Math.round(Math.random())]; //TO DO: randomise
+    return "JOEY";
   }
 
   function obscureWord(word: string): string {
@@ -59,48 +73,11 @@ window.onload = (): void => {
     return obscureWord;
   }
 
-  function jumpToNextOrPrevious(event: KeyboardEvent): void {
-    const key: string = event.key.toUpperCase();
-    const target: HTMLInputElement = event.target as HTMLInputElement;
-    const currentIndex: number = parseInt(target.id.substring(5));
-
-    //going backward
-    if (key === "BACKSPACE" || key === "DELETE") {
-      if ((event.target as HTMLInputElement).value != "") {
-        return;
-      }
-      if (currentIndex === 1) {
-        return;
-      }
-
-      const previousInputId = "input" + (currentIndex - 1);
-      const previousInput = document.getElementById(previousInputId) as HTMLInputElement;
-      previousInput.focus();
-      event.preventDefault();
-      return;
-    }
-
-    // Check if the pressed key matches regex
-    const regex: RegExp = /[A-Z]/; //A - Z
-    if (!regex.test(key)) {
-      event.preventDefault();
-    }
-
-    target.value = key; //assigning key value to input field
-    event.preventDefault(); //preventing input from being "written" AFTER nextInput.focus();
-
-    if (currentIndex === 5) {
-      return;
-    }
-
-    const nextInput = document.getElementById("input" + (currentIndex + 1)) as HTMLInputElement;
-    nextInput.focus();
+  function printInputElements(inputElements: HTMLElement[]): void {
+    const inputContainer: HTMLDivElement = document.getElementById("input-container") as HTMLDivElement;
+    inputElements.forEach((element) => inputContainer.append(element));
   }
 
   //event listeners
   document.getElementById("user-submit")?.addEventListener("click", handleUserSubmit);
-
-  //adding event listeners to each input field
-  const elements: HTMLElement[] = Array.from(document.getElementsByClassName("letter-input")) as HTMLElement[]; //casting from HTMLCollectionOf<Element> TO array TO HTMLElement[];
-  elements.forEach((element) => element?.addEventListener("keydown", jumpToNextOrPrevious));
 };
