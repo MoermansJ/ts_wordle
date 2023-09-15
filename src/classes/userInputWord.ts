@@ -42,13 +42,31 @@ export default class UserInputWord implements IHTMLPrintable {
 
   public render(): HTMLElement[] {
     const userInputCharArray: string[] = UserInputWord.convertWordToCharArray(this.userInput, this.computerWord);
+    const computerWordCharArray: string[] = UserInputWord.convertWordToCharArray(this.computerWord, this.computerWord);
 
-    //creating row element
-    let guessRowHTML: HTMLDivElement[] = [];
+    //creating map, key = character, value = occurances in computerWord
+    let computerWordCharMap: Map<string, number> = new Map();
+    for (const item of computerWordCharArray) {
+      const count = computerWordCharMap.get(item);
+      if (count !== undefined) {
+        computerWordCharMap.set(item, count + 1);
+      } else {
+        computerWordCharMap.set(item, 1);
+      }
+    }
 
-    //individual letters
+    //calculating available orange letters
+    let availableOrange: Map<String, number> = new Map(computerWordCharMap);
     for (let i = 0; i < userInputCharArray.length; i++) {
-      //creating element
+      if (userInputCharArray[i] === computerWordCharArray[i]) {
+        availableOrange.set(userInputCharArray[i], (availableOrange.get(userInputCharArray[i]) as number) - 1);
+      }
+    }
+
+    //creating elements
+    let guessRowHTML: HTMLDivElement[] = [];
+    for (let i = 0; i < computerWordCharArray.length; i++) {
+      const currentChar: string = userInputCharArray[i];
       let letterDivHTML: HTMLDivElement = document.createElement("span") as HTMLDivElement;
       letterDivHTML.id = `user-word-${this._id}-letter-${i}`;
       letterDivHTML.innerText = `${userInputCharArray[i]}`;
@@ -56,28 +74,23 @@ export default class UserInputWord implements IHTMLPrintable {
       //style - layout
       letterDivHTML.style.gridRow = "" + (this.id + 2);
       letterDivHTML.style.gridColumn = "" + (i + 1);
-      letterDivHTML = this.styleColor(letterDivHTML, i, userInputCharArray);
 
-      //appending
+      //style - colour - green
+      if (computerWordCharArray[i] === userInputCharArray[i]) {
+        letterDivHTML.style.background = "#6AAA64"; //green
+      }
+
+      //style - colour - orange
+      if (computerWordCharArray.includes(userInputCharArray[i]) && computerWordCharArray[i] !== userInputCharArray[i]) {
+        if ((availableOrange.get(userInputCharArray[i]) as number) >= 1) {
+          letterDivHTML.style.background = "#D1B036"; //orange
+          availableOrange.set(userInputCharArray[i], (availableOrange.get(userInputCharArray[i]) as number) - 1); //decrementing available orange for character
+        }
+      }
+
       guessRowHTML.push(letterDivHTML);
     }
 
     return guessRowHTML;
-  }
-
-  private styleColor(element: HTMLDivElement, index: number, userInputCharArray: string[]): HTMLDivElement {
-    const computerWordCharArray: string[] = UserInputWord.convertWordToCharArray(this.computerWord, this.computerWord);
-
-    //if letter is correct but in wrong place - ORANGE
-    if (computerWordCharArray.includes(userInputCharArray[index])) {
-      element.style.background = "#D1B036";
-    }
-
-    //if letter is correct and in the right place - GREEN
-    if (computerWordCharArray[index] === userInputCharArray[index]) {
-      element.style.background = "#6AAA64";
-    }
-
-    return element;
   }
 }

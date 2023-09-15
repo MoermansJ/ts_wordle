@@ -37,7 +37,9 @@ export default class Game {
         return this._allInputElements;
     }
     static generateRandomWord() {
-        return "Joey".toUpperCase();
+        const words = ["coffee", "table", "cat", "chair", "tree", "java", "typescript", "compiler"];
+        const randomIndex = Math.floor(Math.random() * words.length);
+        return words[randomIndex].toUpperCase();
     }
     static printHTML(children, parent) {
         if (Array.isArray(children)) {

@@ -30,26 +30,42 @@ export default class UserInputWord {
     }
     render() {
         const userInputCharArray = UserInputWord.convertWordToCharArray(this.userInput, this.computerWord);
-        let guessRowHTML = [];
+        const computerWordCharArray = UserInputWord.convertWordToCharArray(this.computerWord, this.computerWord);
+        let computerWordCharMap = new Map();
+        for (const item of computerWordCharArray) {
+            const count = computerWordCharMap.get(item);
+            if (count !== undefined) {
+                computerWordCharMap.set(item, count + 1);
+            }
+            else {
+                computerWordCharMap.set(item, 1);
+            }
+        }
+        let availableOrange = new Map(computerWordCharMap);
         for (let i = 0; i < userInputCharArray.length; i++) {
+            if (userInputCharArray[i] === computerWordCharArray[i]) {
+                availableOrange.set(userInputCharArray[i], availableOrange.get(userInputCharArray[i]) - 1);
+            }
+        }
+        let guessRowHTML = [];
+        for (let i = 0; i < computerWordCharArray.length; i++) {
+            const currentChar = userInputCharArray[i];
             let letterDivHTML = document.createElement("span");
             letterDivHTML.id = `user-word-${this._id}-letter-${i}`;
             letterDivHTML.innerText = `${userInputCharArray[i]}`;
             letterDivHTML.style.gridRow = "" + (this.id + 2);
             letterDivHTML.style.gridColumn = "" + (i + 1);
-            letterDivHTML = this.styleColor(letterDivHTML, i, userInputCharArray);
+            if (computerWordCharArray[i] === userInputCharArray[i]) {
+                letterDivHTML.style.background = "#6AAA64";
+            }
+            if (computerWordCharArray.includes(userInputCharArray[i]) && computerWordCharArray[i] !== userInputCharArray[i]) {
+                if (availableOrange.get(userInputCharArray[i]) >= 1) {
+                    letterDivHTML.style.background = "#D1B036";
+                    availableOrange.set(userInputCharArray[i], availableOrange.get(userInputCharArray[i]) - 1);
+                }
+            }
             guessRowHTML.push(letterDivHTML);
         }
         return guessRowHTML;
-    }
-    styleColor(element, index, userInputCharArray) {
-        const computerWordCharArray = UserInputWord.convertWordToCharArray(this.computerWord, this.computerWord);
-        if (computerWordCharArray.includes(userInputCharArray[index])) {
-            element.style.background = "#D1B036";
-        }
-        if (computerWordCharArray[index] === userInputCharArray[index]) {
-            element.style.background = "#6AAA64";
-        }
-        return element;
     }
 }

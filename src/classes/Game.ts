@@ -5,7 +5,6 @@ import HandleUserSubmit from "./HandleUserSubmit.js";
 
 export default class Game implements IGame {
   //properties
-  // const words: string[] = ["alphabet", "test"];
   private _computerWord: string;
   private _userGuessCounter: number;
   private _readyToPlay: boolean;
@@ -57,8 +56,9 @@ export default class Game implements IGame {
 
   //custom methods
   private static generateRandomWord(): string {
-    // return words[Math.round(Math.random())].toUpperCase(); //TO DO: randomise
-    return "Joey".toUpperCase();
+    const words: string[] = ["coffee", "table", "cat", "chair", "tree", "java", "typescript", "compiler"];
+    const randomIndex = Math.floor(Math.random() * words.length);
+    return words[randomIndex].toUpperCase(); //TO DO: randomise
   }
 
   public static printHTML(children: HTMLElement[] | HTMLElement, parent: HTMLElement): void {
