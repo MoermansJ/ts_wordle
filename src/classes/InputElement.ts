@@ -1,4 +1,6 @@
-export default class InputElement {
+import IHTMLPrintable from "../interfaces/IHTMLPrintable.js";
+
+export default class InputElement implements IHTMLPrintable {
   //properties
   private static _computerWord: string;
   private _HTMLElement: HTMLElement[];
@@ -27,7 +29,6 @@ export default class InputElement {
       inputHTML.id = `input${i}`;
       inputHTML.style.gridRow = "0";
       inputHTML.style.gridColumn = "" + i;
-
       inputHTML.addEventListener("keydown", InputElement.jumpToNextOrPrevious); //behavior
       HTML.push(inputHTML);
     }

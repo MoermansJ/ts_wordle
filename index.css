@@ -15,6 +15,16 @@ body {
   font-family: "Roboto", sans-serif;
 }
 
+.confetti {
+  width: 10px;
+  height: 10px;
+  background-color: #f00;
+  position: absolute;
+  animation: confetti 2s ease infinite;
+  transform-origin: 50% 50%;
+  opacity: 0;
+}
+
 #input-container {
   display: grid;
   grid-template-columns: auto minmax(auto, 1fr) auto;
@@ -44,16 +54,27 @@ body {
 }
 
 #input-container > span {
-  animation: fadeInUp 0.5s ease-out; /* Adjust the duration and timing function as needed */
+  animation: fadeInUp 0.3s ease-out;
+}
+
+@keyframes confetti {
+  0% {
+    transform: translateY(0) rotate(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(90vh) rotate(360deg);
+    opacity: 0;
+  }
 }
 
 @keyframes fadeInUp {
   0% {
-    opacity: 0; /* Start with 0% opacity */
-    transform: translateY(20px); /* Start 20px below its final position */
+    opacity: 0;
+    transform: translateY(20px);
   }
   100% {
-    opacity: 1; /* End with 100% opacity */
-    transform: translateY(0); /* End at its final position */
+    opacity: 1;
+    transform: translateY(0);
   }
 }
