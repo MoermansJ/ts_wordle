@@ -3,6 +3,7 @@ import HandleUserSubmit from "./HandleUserSubmit.js";
 export default class Game {
     constructor() {
         this._computerWord = Game.generateRandomWord();
+        console.log(this.computerWord);
         this._allInputElements = new Array();
         this._userGuessCounter = 0;
         this._readyToPlay = false;

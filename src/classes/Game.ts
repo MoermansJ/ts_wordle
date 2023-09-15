@@ -13,6 +13,7 @@ export default class Game implements IGame {
   //constructor
   public constructor() {
     this._computerWord = Game.generateRandomWord();
+    console.log(this.computerWord);
     this._allInputElements = new Array();
     this._userGuessCounter = 0;
     this._readyToPlay = false;
