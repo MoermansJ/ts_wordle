@@ -46,7 +46,7 @@ window.onload = (): void => {
   //helper methods
   function generateRandomWord(): string {
     // return words[Math.round(Math.random())].toUpperCase(); //TO DO: randomise
-    return "joeye".toUpperCase();
+    return "joey".toUpperCase();
   }
 
   function printUserInput(HTML: HTMLElement[]): void {
