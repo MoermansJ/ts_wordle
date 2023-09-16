@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Recursive&family=Roboto:wght@100;300&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Recursive&display=swap");
 
 :root {
   --white: #fffdff;
@@ -15,6 +15,16 @@ body {
   font-family: "Roboto", sans-serif;
 }
 
+nav {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+h1 {
+  font-size: 48px;
+}
+
 .confetti {
   width: 10px;
   height: 10px;
@@ -29,14 +39,13 @@ body {
   display: grid;
   grid-template-columns: auto minmax(auto, 1fr) auto;
   justify-content: center; /* Center the middle column */
-  gap: 10px; /* Adjust the gap between columns */
+  gap: 0.3rem; /* Adjust the gap between columns */
 }
 
 #input-container > span,
 #input-container > input {
   color: var(--white);
   background: #131314;
-  border: 2px solid black;
   width: 40px;
   height: 40px;
   padding: 10px;
@@ -44,17 +53,78 @@ body {
   line-height: 2.5rem;
   font-weight: 900;
   font-size: 24px;
+  border: none;
+  caret-color: transparent;
 }
 
 #input-container > button {
-}
-
-#input-container > input {
-  caret-color: transparent;
+  background: #131314;
+  color: var(--white);
+  font-weight: 900;
+  border: none;
+  padding: 0 var(--boxSide);
+  font-size: 24px;
 }
 
 #input-container > span {
   animation: fadeInUp 0.3s ease-out;
+}
+
+.logo-green {
+  background: #528d4d;
+}
+
+.logo-orange {
+  background: #b49f3b;
+}
+
+#logo-wrapper {
+  display: flex;
+  align-items: center;
+  perspective: 10000px;
+  margin: 1.6rem 0 3rem;
+}
+
+.cube {
+  width: 60px;
+  height: 60px;
+  margin-right: 8.5px;
+  position: relative;
+  transform-style: preserve-3d;
+  transform: rotateX(-12deg) rotateY(-28deg); /* Adjusted rotation for 10-degree angle */
+}
+
+.face {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  line-height: 60px;
+  font-size: 24px;
+  border: 0.1rem solid #131314;
+  border-radius: 4px;
+  position: absolute;
+  transform-style: preserve-3d;
+}
+
+.cube .face:nth-child(1) {
+  transform: rotateY(0deg) translateZ(30px);
+}
+.cube .face:nth-child(2) {
+  transform: rotateY(90deg) translateZ(30px);
+  /* box-shadow: inset 10px 0 10px 10px #0000004e; Adjust values as needed */
+  box-shadow: inset 30px 100px 12px 2px #0000004e; /* Adjust values as needed */
+}
+.cube .face:nth-child(3) {
+  transform: rotateY(180deg) translateZ(30px);
+}
+.cube .face:nth-child(4) {
+  transform: rotateY(270deg) translateZ(30px);
+}
+.cube .face:nth-child(5) {
+  transform: rotateX(-90deg) translateZ(30px);
+}
+.cube .face:nth-child(6) {
+  transform: rotateX(90deg) translateZ(30px);
 }
 
 @keyframes confetti {

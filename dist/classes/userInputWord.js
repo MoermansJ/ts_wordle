@@ -56,11 +56,11 @@ export default class UserInputWord {
             letterDivHTML.style.gridRow = "" + (this.id + 2);
             letterDivHTML.style.gridColumn = "" + (i + 1);
             if (computerWordCharArray[i] === userInputCharArray[i]) {
-                letterDivHTML.style.background = "#6AAA64";
+                letterDivHTML.style.background = "#528D4D";
             }
             if (computerWordCharArray.includes(userInputCharArray[i]) && computerWordCharArray[i] !== userInputCharArray[i]) {
                 if (availableOrange.get(userInputCharArray[i]) >= 1) {
-                    letterDivHTML.style.background = "#D1B036";
+                    letterDivHTML.style.background = "#B49F3B";
                     availableOrange.set(userInputCharArray[i], availableOrange.get(userInputCharArray[i]) - 1);
                 }
             }

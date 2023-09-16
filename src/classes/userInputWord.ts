@@ -77,13 +77,13 @@ export default class UserInputWord implements IHTMLPrintable {
 
       //style - colour - green
       if (computerWordCharArray[i] === userInputCharArray[i]) {
-        letterDivHTML.style.background = "#6AAA64"; //green
+        letterDivHTML.style.background = "#528D4D"; //green
       }
 
       //style - colour - orange
       if (computerWordCharArray.includes(userInputCharArray[i]) && computerWordCharArray[i] !== userInputCharArray[i]) {
         if ((availableOrange.get(userInputCharArray[i]) as number) >= 1) {
-          letterDivHTML.style.background = "#D1B036"; //orange
+          letterDivHTML.style.background = "#B49F3B"; //orange
           availableOrange.set(userInputCharArray[i], (availableOrange.get(userInputCharArray[i]) as number) - 1); //decrementing available orange for character
         }
       }

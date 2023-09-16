@@ -2,6 +2,7 @@ import IGame from "../interfaces/IGame.js";
 import InputElement from "./InputElement.js";
 import IEventHandler from "../interfaces/IEventHandler.js";
 import HandleUserSubmit from "./HandleUserSubmit.js";
+import HandleButtonKeydown from "./HandleButtonKeydown.js";
 
 export default class Game implements IGame {
   //properties
@@ -13,7 +14,6 @@ export default class Game implements IGame {
   //constructor
   public constructor() {
     this._computerWord = Game.generateRandomWord();
-    console.log(this.computerWord);
     this._allInputElements = new Array();
     this._userGuessCounter = 0;
     this._readyToPlay = false;
@@ -33,6 +33,9 @@ export default class Game implements IGame {
     //event handling & listening
     const handleUserSubmit: IEventHandler = new HandleUserSubmit(this);
     document.getElementById("user-submit")?.addEventListener("click", handleUserSubmit);
+
+    const handleButtonKeydown: IEventHandler = new HandleButtonKeydown(this.computerWord.length);
+    document.getElementById("user-submit")?.addEventListener("keydown", handleButtonKeydown);
   }
 
   //getters & setters
@@ -57,7 +60,33 @@ export default class Game implements IGame {
 
   //custom methods
   private static generateRandomWord(): string {
-    const words: string[] = ["coffee", "table", "cat", "chair", "tree", "java", "typescript", "compiler"];
+    const words: string[] = [
+      "abort",
+      "break",
+      "crazy",
+      "dummy",
+      "empty",
+      "fresh",
+      "great",
+      "hello",
+      "inner",
+      "joins",
+      "kilos",
+      "lemon",
+      "money",
+      "opens",
+      "price",
+      "queen",
+      "rusty",
+      "saves",
+      "think",
+      "using",
+      "value",
+      "world",
+      "xenon",
+      "yours",
+      "zeros",
+    ];
     const randomIndex = Math.floor(Math.random() * words.length);
     return words[randomIndex].toUpperCase(); //TO DO: randomise
   }

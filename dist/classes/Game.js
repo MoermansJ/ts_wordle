@@ -1,15 +1,15 @@
 import InputElement from "./InputElement.js";
 import HandleUserSubmit from "./HandleUserSubmit.js";
+import HandleButtonKeydown from "./HandleButtonKeydown.js";
 export default class Game {
     constructor() {
         this._computerWord = Game.generateRandomWord();
-        console.log(this.computerWord);
         this._allInputElements = new Array();
         this._userGuessCounter = 0;
         this._readyToPlay = false;
     }
     main() {
-        var _a;
+        var _a, _b;
         this.printTitle(this.computerWord);
         const inputElements = new InputElement(this.computerWord).HTMLElement;
         const inputContainer = document.getElementById("input-container");
@@ -18,6 +18,8 @@ export default class Game {
         this._readyToPlay = true;
         const handleUserSubmit = new HandleUserSubmit(this);
         (_a = document.getElementById("user-submit")) === null || _a === void 0 ? void 0 : _a.addEventListener("click", handleUserSubmit);
+        const handleButtonKeydown = new HandleButtonKeydown(this.computerWord.length);
+        (_b = document.getElementById("user-submit")) === null || _b === void 0 ? void 0 : _b.addEventListener("keydown", handleButtonKeydown);
     }
     get computerWord() {
         return this._computerWord;
@@ -38,7 +40,33 @@ export default class Game {
         return this._allInputElements;
     }
     static generateRandomWord() {
-        const words = ["coffee", "table", "cat", "chair", "tree", "java", "typescript", "compiler"];
+        const words = [
+            "abort",
+            "break",
+            "crazy",
+            "dummy",
+            "empty",
+            "fresh",
+            "great",
+            "hello",
+            "inner",
+            "joins",
+            "kilos",
+            "lemon",
+            "money",
+            "opens",
+            "price",
+            "queen",
+            "rusty",
+            "saves",
+            "think",
+            "using",
+            "value",
+            "wires",
+            "xenon",
+            "yours",
+            "zeros",
+        ];
         const randomIndex = Math.floor(Math.random() * words.length);
         return words[randomIndex].toUpperCase();
     }
