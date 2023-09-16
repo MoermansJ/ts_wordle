@@ -62,7 +62,7 @@ export default class Game {
             "think",
             "using",
             "value",
-            "wires",
+            "world",
             "xenon",
             "yours",
             "zeros",
