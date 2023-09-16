@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Recursive&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Recursive&display=swap"); */
 
 :root {
   --white: #fffdff;
@@ -111,7 +111,6 @@ h1 {
 }
 .cube .face:nth-child(2) {
   transform: rotateY(90deg) translateZ(30px);
-  /* box-shadow: inset 10px 0 10px 10px #0000004e; Adjust values as needed */
   box-shadow: inset 30px 100px 12px 2px #0000004e; /* Adjust values as needed */
 }
 .cube .face:nth-child(3) {
