@@ -21,6 +21,7 @@ export default class Game implements IGame {
 
   //main - game flow
   public main(): void {
+    //loading modules
     this.printTitle(this.computerWord);
     const inputElements: HTMLElement[] = new InputElement(this.computerWord).HTMLElement;
 
@@ -28,7 +29,6 @@ export default class Game implements IGame {
     Game.printHTML(inputElements, inputContainer);
 
     this._allInputElements = Array.from(document.getElementsByClassName("letter-input")) as HTMLInputElement[]; //casting from HTMLCollectionOf<Element> TO array TO HTMLElement[];
-    this._readyToPlay = true;
 
     //event handling & listening
     const handleUserSubmit: IEventHandler = new HandleUserSubmit(this);
@@ -36,6 +36,10 @@ export default class Game implements IGame {
 
     const handleButtonKeydown: IEventHandler = new HandleButtonKeydown(this.computerWord.length);
     document.getElementById("user-submit")?.addEventListener("keydown", handleButtonKeydown);
+
+    //hiding loadscreen
+    this.hideLoadingScreen();
+    this._readyToPlay = true;
   }
 
   //getters & setters
@@ -108,5 +112,10 @@ export default class Game implements IGame {
 
   public static updateUserGuessCounter(game: Game): void {
     (document.getElementById("computer-title") as HTMLElement).innerText = `Guess the ${game.computerWord.length}-letter word\nAttempt ${game.userGuessCounter}/7`;
+  }
+
+  private hideLoadingScreen() {
+    const loadingScreen = document.getElementById("loading-screen") as HTMLDivElement;
+    loadingScreen.style.animation = "fadeOut 1.6s forwards";
   }
 }

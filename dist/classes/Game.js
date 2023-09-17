@@ -15,11 +15,12 @@ export default class Game {
         const inputContainer = document.getElementById("input-container");
         Game.printHTML(inputElements, inputContainer);
         this._allInputElements = Array.from(document.getElementsByClassName("letter-input"));
-        this._readyToPlay = true;
         const handleUserSubmit = new HandleUserSubmit(this);
         (_a = document.getElementById("user-submit")) === null || _a === void 0 ? void 0 : _a.addEventListener("click", handleUserSubmit);
         const handleButtonKeydown = new HandleButtonKeydown(this.computerWord.length);
         (_b = document.getElementById("user-submit")) === null || _b === void 0 ? void 0 : _b.addEventListener("keydown", handleButtonKeydown);
+        this.hideLoadingScreen();
+        this._readyToPlay = true;
     }
     get computerWord() {
         return this._computerWord;
@@ -82,5 +83,9 @@ export default class Game {
     }
     static updateUserGuessCounter(game) {
         document.getElementById("computer-title").innerText = `Guess the ${game.computerWord.length}-letter word\nAttempt ${game.userGuessCounter}/7`;
+    }
+    hideLoadingScreen() {
+        const loadingScreen = document.getElementById("loading-screen");
+        loadingScreen.style.animation = "fadeOut 1.6s forwards";
     }
 }

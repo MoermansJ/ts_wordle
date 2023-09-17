@@ -3,16 +3,15 @@
 :root {
   --white: #fffdff;
   --black: #3a3a3c;
+  --darkblack: #131314;
   --boxSide: 20px;
+  font-family: "Roboto", sans-serif;
 }
 
 body {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  color: var(--white);
+  margin: 0;
+  padding: 0;
   background: var(--black);
-  font-family: "Roboto", sans-serif;
 }
 
 nav {
@@ -45,7 +44,7 @@ h1 {
 #input-container > span,
 #input-container > input {
   color: var(--white);
-  background: #131314;
+  background: var(--darkblack);
   width: 40px;
   height: 40px;
   padding: 10px;
@@ -58,7 +57,7 @@ h1 {
 }
 
 #input-container > button {
-  background: #131314;
+  background: var(--darkblack);
   color: var(--white);
   font-weight: 900;
   border: none;
@@ -100,7 +99,7 @@ h1 {
   text-align: center;
   line-height: 60px;
   font-size: 24px;
-  border: 0.1rem solid #131314;
+  border: 0.1rem solid var(--darkblack);
   border-radius: 4px;
   position: absolute;
   transform-style: preserve-3d;
@@ -126,6 +125,44 @@ h1 {
   transform: rotateX(90deg) translateZ(30px);
 }
 
+#loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--black);
+  color: var(--white);
+  display: flex;
+  justify-content: center;
+  z-index: 9999; /* Adjust the z-index as needed */
+  font-size: 48px;
+  pointer-events: none;
+}
+
+#loading-screen-logo {
+  margin-top: 4rem;
+  display: flex;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+#main-content {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  color: var(--white);
+  margin: 0;
+  padding: 0;
+}
+
 @keyframes confetti {
   0% {
     transform: translateY(0) rotate(0);
@@ -145,5 +182,50 @@ h1 {
   100% {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+#loading-screen-logo > div {
+  width: 50px;
+  height: 50px;
+  margin: 0 10px;
+  animation: slide 0.3s linear;
+}
+
+#loading-screen-logo > div:nth-child(1) {
+  animation-delay: 0s;
+}
+
+#loading-screen-logo > div:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+#loading-screen-logo > div:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+#loading-screen-logo > div:nth-child(4) {
+  animation-delay: 0.3s;
+}
+
+#loading-screen-logo > div:nth-child(5) {
+  animation-delay: 0.35s;
+}
+
+#loading-screen-logo > div:nth-child(6) {
+  animation-delay: 0.5s;
+}
+
+#loading-screen-logo > div:nth-child(7) {
+  animation-delay: 0.6s;
+}
+
+@keyframes slide {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
   }
 }
