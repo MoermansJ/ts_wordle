@@ -88,10 +88,10 @@ h1 {
 .cube {
   width: 60px;
   height: 60px;
-  margin-right: 8.5px;
   position: relative;
+  margin-right: 2px;
   transform-style: preserve-3d;
-  transform: rotateX(-12deg) rotateY(-28deg); /* Adjusted rotation for 10-degree angle */
+  transform: rotateX(-8deg) rotateY(-16deg); /* Adjusted rotation for 10-degree angle */
 }
 
 .face {
